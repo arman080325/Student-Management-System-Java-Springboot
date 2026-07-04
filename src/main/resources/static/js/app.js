@@ -5,14 +5,68 @@
 
 const API = "/api/students";
 
-const COURSES  = ["B.Tech", "BBA", "BCA", "BSC", "MSC", "MBA", "MCA", "MCom", "MA", "BA"];
-const BRANCHES = [
-  "Computer Science & Engineering (CSE)",
-  "Computer Science & Technology (CST)",
-  "Electronics & Communication Engineering (ECE)",
-  "Electrical & Electronics Engineering (EEE)",
-  "Electronics & Instrumentation Engineering (EIE)",
+const COURSES = [
+  "B.Tech", "M.Tech", "BCA", "MCA", "B.Sc", "M.Sc", "BBA", "MBA",
+  "B.Com", "M.Com", "BA", "MA", "B.Pharm", "M.Pharm", "B.Arch", "M.Arch",
+  "B.Des", "M.Des", "B.Ed", "M.Ed", "LLB", "LLM", "BHM", "BHMCT",
+  "BPT", "MPT", "BDS", "MBBS", "PhD", "Diploma",
+  "Integrated BCA + MCA", "Integrated B.Tech + M.Tech",
 ];
+
+// Grouped so the long list renders as labelled <optgroup> sections
+const BRANCHES = {
+  "Computer Science": [
+    "Computer Science & Engineering (CSE)",
+    "Computer Science & Technology (CST)",
+    "Computer Engineering (CE)",
+    "Information Technology (IT)",
+    "Artificial Intelligence (AI)",
+    "Artificial Intelligence & Machine Learning (AI & ML)",
+    "Computer Science & Artificial Intelligence",
+    "Data Science (DS)",
+    "Cyber Security",
+    "Internet of Things (IoT)",
+  ],
+  "Electronics": [
+    "Electronics & Communication Engineering (ECE)",
+    "Electronics & Instrumentation Engineering (EIE)",
+    "Electrical & Electronics Engineering (EEE)",
+    "Electronics Engineering (VLSI Design & Technology)",
+    "Embedded Systems",
+  ],
+  "Core Engineering": [
+    "Mechanical Engineering (ME)",
+    "Civil Engineering (CE)",
+    "Electrical Engineering (EE)",
+    "Chemical Engineering",
+    "Production Engineering",
+    "Industrial Engineering",
+    "Mining Engineering",
+    "Metallurgical Engineering",
+    "Aerospace Engineering",
+    "Aeronautical Engineering",
+    "Automobile Engineering",
+    "Biotechnology",
+    "Biomedical Engineering",
+    "Environmental Engineering",
+    "Robotics & Automation",
+  ],
+  "Science": [
+    "Physics", "Chemistry", "Mathematics", "Statistics", "Data Analytics",
+  ],
+  "Commerce & Management": [
+    "Business Administration", "Finance", "Marketing",
+    "Human Resource Management", "Operations Management", "Commerce",
+  ],
+  "Arts & Humanities": [
+    "English", "Economics", "History", "Political Science", "Psychology", "Sociology",
+  ],
+  "Law": ["Law"],
+  "Pharmacy & Medical": ["Pharmacy", "Medicine", "Dentistry", "Physiotherapy"],
+  "Architecture & Design": [
+    "Architecture", "Interior Design", "Fashion Design", "Graphic Design",
+  ],
+};
 
 const AVATAR_PALETTE = ["#006c47", "#0d6b8f", "#7a4fc9", "#b8722f", "#2f7ab8", "#8f5d0d", "#3f8f5d"];
 
@@ -265,9 +319,21 @@ function switchView(view) {
 }
 
 /* ---------- form ---------- */
+/**
+ * Populates a <select>. Accepts either a flat array of options,
+ * or an object of { groupLabel: [options] } which renders as <optgroup>s.
+ */
 function fillSelect(name, opts) {
   const sel = els.form.elements[name];
-  sel.innerHTML = opts.map((o) => `<option value="${esc(o)}">${esc(o)}</option>`).join("");
+  if (Array.isArray(opts)) {
+    sel.innerHTML = opts.map((o) => `<option value="${esc(o)}">${esc(o)}</option>`).join("");
+  } else {
+    sel.innerHTML = Object.entries(opts).map(([group, items]) =>
+      `<optgroup label="${esc(group)}">${
+        items.map((o) => `<option value="${esc(o)}">${esc(o)}</option>`).join("")
+      }</optgroup>`
+    ).join("");
+  }
 }
 
 function clearErrors() {

@@ -114,8 +114,15 @@ body {
   font-family: var(--font-mono);
   font-size: 10.5px; color: var(--text-faint); letter-spacing: 0.02em; margin-top: 2px;
 }
+.brand__home { display: inline-flex; line-height: 0; }
 
-.view-tabs { display: flex; gap: 4px; margin-left: 8px; }
+.view-tabs {
+  display: flex;
+  gap: 4px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
 .view-tab {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--font-ui); font-size: 13.5px; font-weight: 500;
@@ -377,6 +384,7 @@ kbd { font-family: var(--font-mono); font-size: 11px; background: var(--surface-
   .wrap { padding: 18px 14px 80px; }
   .form-grid { grid-template-columns: 1fr; }
   .count-chip { display: none; }
+  .view-tabs { position: static; transform: none; }
 }
 @media (max-width: 520px) {
   .btn__label { display: none; }
