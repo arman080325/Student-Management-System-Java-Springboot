@@ -1,0 +1,24 @@
+# Build output
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Secrets — never commit these
+.env
+*.env
+!.env.example
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.classpath
+*.project
+out/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
